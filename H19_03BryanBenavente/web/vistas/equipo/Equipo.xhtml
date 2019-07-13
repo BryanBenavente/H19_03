@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Equipo</title>
+        <f:event type="preRenderView" listener="#{equipoC.listar()}"/>
+    </h:head>
+    <h:body>
+        <p:growl showDetail="true" life="1000" id="msg"/>                               
+        <h:form id="equipo">
+            <h1 style="color: coral">Lista de Equipos</h1>
+            <p:panelMenu>
+                <p:submenu label="Menú">
+                    <p:menuitem value="Menú" url="../../index.xhtml"/>
+                </p:submenu>
+            </p:panelMenu>
+            
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Nombre"/>
+                <p:inputText value="#{equipoC.equipo.NOMEQUI}" required="true" 
+                             requiredMessage="Ingresar el nombre del equipo" maxlength="30">
+                    <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
+                </p:inputText>
+                <p:outputLabel value="Descripción"/>
+                <p:inputText value="#{equipoC.equipo.DESCEQU}" maxlength="30"/>
+                <p:outputLabel value="Categoría"/>
+                <p:selectOneMenu value="#{equipoC.equipo.CATEQUI}">
+                    <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                    <f:selectItem itemLabel="Computadoras" itemValue="CP"/>
+                    <f:selectItem itemLabel="Laptops" itemValue="LP"/>
+                    <f:selectItem itemLabel="Televisores" itemValue="TV"/>
+                    <f:selectItem itemLabel="Teclados" itemValue="TC"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Precio"/>
+                <p:spinner value="#{equipoC.equipo.PREEQUI}" min="1" max="9999" maxlength="6">
+                    <p:keyFilter regEx="/[0-9]/"/>
+                </p:spinner>                            
+                <p:commandButton value="Guardar" actionListener="#{equipoC.registrarC()}" update="equipo :msg :lstEqu"/>
+            </p:panelGrid>
+        </h:form>
+
+        <h:form id="lstEqu">
+            <br/>
+            <p:dataTable id="tbEq" reflow="true" paginator="true" value="#{equipoC.listaEqup}" var="lista" rows="10">
+                <p:column headerText="Equipo" width="200">
+                    <h:outputLabel value="#{lista.NOMEQUI}"/>
+                </p:column>
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{lista.DESCEQU}"/>
+                </p:column>
+                <p:column headerText="Categoría" >
+                    <h:outputText value="Computadoras" rendered="#{lista.CATEQUI eq 'CP'}"/>
+                    <h:outputText value="Laptops" rendered="#{lista.CATEQUI eq 'LP'}"/>
+                    <h:outputText value="Televisores" rendered="#{lista.CATEQUI eq 'TV'}"/>
+                    <h:outputText value="Teclados" rendered="#{lista.CATEQUI eq 'TC'}"/>
+                </p:column>
+                <p:column headerText="Precio" width="150">
+                    <h:outputText value="#{lista.PREEQUI}">
+                        <f:convertNumber type="currency" currencySymbol="S/. "/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Estado" width="70" style="text-align: center">
+                    <h:outputText value="Activo" rendered="#{lista.ESTEQU eq 'A'}"/>
+                    <h:outputText value="Inactivo" rendered="#{lista.ESTEQU eq 'I'}"/>
+                </p:column>
+                <p:column width="40">
+                    <p:commandButton icon="ui-icon-pencil" oncomplete="PF('wdlgDatos').show();" id="tp" update=":dlgDatos">
+                        <f:setPropertyActionListener value="#{lista}" target="#{equipoC.equipo}"/>
+                    </p:commandButton>
+                    <p:tooltip value="MODIFICAR" position="left" for="tp"/>
+                </p:column>
+                <p:column width="40">
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="#{equipoC.eliminarC(lista)}" id="tlp"
+                                     update="lstEqu :msg">
+                        <p:confirm header="Confirmar" message="¿Desea eliminar?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:tooltip value="ELIMINAR" position="left" for="tlp"/>
+                    <p:confirmDialog global="true">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="dlgDatos" widgetVar="wdlgDatos" responsive="true" header="Modificar" modal="true">
+            <h:form id="equ">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText value="#{equipoC.equipo.NOMEQUI}" required="true" 
+                                 requiredMessage="Ingresar el nombre del equipo" maxlength="30">
+                        <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
+                    </p:inputText>
+                    <p:outputLabel value="Descripción"/>
+                    <p:inputText value="#{equipoC.equipo.DESCEQU}" maxlength="30"/>
+                    <p:outputLabel value="Categoría"/>
+                    <p:selectOneMenu value="#{equipoC.equipo.CATEQUI}">
+                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                        <f:selectItem itemLabel="Computadoras" itemValue="CP"/>
+                        <f:selectItem itemLabel="Laptops" itemValue="LP"/>
+                        <f:selectItem itemLabel="Televisores" itemValue="TV"/>
+                        <f:selectItem itemLabel="Teclados" itemValue="TC"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Precio"/>
+                    <p:spinner value="#{equipoC.equipo.PREEQUI}" min="1" max="9999" maxlength="6">
+                        <p:keyFilter regEx="/[0-9]/"/>
+                    </p:spinner>                            
+                    <p:commandButton value="Guardar" actionListener="#{equipoC.modificarC()}" update="equ :msg :lstEqu"
+                                     oncomplete="if(args &amp;&amp; !args.validationFailed)PF('wdlgDatos').hide();"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
