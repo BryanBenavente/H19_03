@@ -34,7 +34,7 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
     @Override
     public void modificar(Persona persona) throws Exception {
         try {
-            String sql = "UPDATE PERSONA.PERSONA SET NOMPER=?, APEPER=?, DNIPER=?, CELPER=?, DIRPER=?, CODUBI=?, TIPPER=?, USUPER=?, PASPER =?"
+            String sql = "UPDATE PERSONA.PERSONA SET NOMPER=?, APEPER=?, DNIPER=?, CELPER=?, DIRPER=?, CODUBI=?, TIPPER=?, USUPER=?, PASPER =? "
                     + "WHERE IDPER =?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, persona.getNOMPER());

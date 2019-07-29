@@ -10,54 +10,59 @@
     </h:head>
     <h:body>
         <p:growl showDetail="true" life="1000" id="msg"/>                               
-        <h:form id="equipo">
-            <h1 style="color: coral">Lista de Equipos</h1>
-            <p:panelMenu>
-                <p:submenu label="Menú">
-                    <p:menuitem value="Menú" url="../../index.xhtml"/>
-                </p:submenu>
-            </p:panelMenu>
-            
-            <p:panelGrid columns="2">
-                <p:outputLabel value="Nombre"/>
-                <p:inputText value="#{equipoC.equipo.NOMEQUI}" required="true" 
-                             requiredMessage="Ingresar el nombre del equipo" maxlength="30">
-                    <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
-                </p:inputText>
-                <p:outputLabel value="Descripción"/>
-                <p:inputText value="#{equipoC.equipo.DESCEQU}" maxlength="30"/>
-                <p:outputLabel value="Categoría"/>
-                <p:selectOneMenu value="#{equipoC.equipo.CATEQUI}">
-                    <f:selectItem itemLabel="Seleccione" itemValue=""/>
-                    <f:selectItem itemLabel="Computadoras" itemValue="CP"/>
-                    <f:selectItem itemLabel="Laptops" itemValue="LP"/>
-                    <f:selectItem itemLabel="Televisores" itemValue="TV"/>
-                    <f:selectItem itemLabel="Teclados" itemValue="TC"/>
-                </p:selectOneMenu>
-                <p:outputLabel value="Precio"/>
-                <p:spinner value="#{equipoC.equipo.PREEQUI}" min="1" max="9999" maxlength="6">
-                    <p:keyFilter regEx="/[0-9]/"/>
-                </p:spinner>                            
-                <p:commandButton value="Guardar" actionListener="#{equipoC.registrarC()}" update="equipo :msg :lstEqu"/>
-            </p:panelGrid>
+        <h:form>
+            <center>
+                <h1 style="color: coral">Lista de Equipos</h1>
+                <p:commandButton value="Nuevo" oncomplete="PF('dato').show();" style="font-size: 13px" icon="ui-icon-plusthick"/>
+            </center>
         </h:form>
 
+        <p:dialog id="dato" widgetVar="dato" modal="true" header="Registro de Equipo" responsive="true"
+                  style="font-size: 13px" resizable="false" draggable="false">
+            <h:form id="equipo">                                    
+                <p:panelGrid columns="2" layout="grid">
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText value="#{equipoC.equipo.NOMEQUI}" required="true" 
+                                 requiredMessage="Ingresar el nombre del equipo" maxlength="30">
+                        <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
+                    </p:inputText>
+                    <p:outputLabel value="Descripción"/>
+                    <p:inputText value="#{equipoC.equipo.DESCEQU}" maxlength="30"/>
+                    <p:outputLabel value="Categoría"/>
+                    <p:selectOneMenu value="#{equipoC.equipo.CATEQUI}">
+                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                        <f:selectItem itemLabel="Computadoras" itemValue="CP"/>
+                        <f:selectItem itemLabel="Laptops" itemValue="LP"/>
+                        <f:selectItem itemLabel="Televisores" itemValue="TV"/>
+                        <f:selectItem itemLabel="Teclados" itemValue="TC"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Precio"/>
+                    <p:spinner value="#{equipoC.equipo.PREEQUI}" min="1" max="9999" maxlength="6">
+                        <p:keyFilter regEx="/[0-9]/"/>
+                    </p:spinner>                            
+                    <p:commandButton value="Guardar" actionListener="#{equipoC.registrarC()}" update="equipo :msg :lstEqu"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+        
+        <!--Datos-->
         <h:form id="lstEqu">
             <br/>
-            <p:dataTable id="tbEq" reflow="true" paginator="true" value="#{equipoC.listaEqup}" var="lista" rows="10">
-                <p:column headerText="Equipo" width="200">
+            <p:dataTable id="tbEq" reflow="true" paginator="true" value="#{equipoC.listaEqup}" var="lista" rows="14"
+                         style="font-size: 12px">
+                <p:column headerText="Equipo" width="150">
                     <h:outputLabel value="#{lista.NOMEQUI}"/>
                 </p:column>
                 <p:column headerText="Descripción">
                     <h:outputText value="#{lista.DESCEQU}"/>
                 </p:column>
-                <p:column headerText="Categoría" >
+                <p:column headerText="Categoría" width="100">
                     <h:outputText value="Computadoras" rendered="#{lista.CATEQUI eq 'CP'}"/>
                     <h:outputText value="Laptops" rendered="#{lista.CATEQUI eq 'LP'}"/>
                     <h:outputText value="Televisores" rendered="#{lista.CATEQUI eq 'TV'}"/>
                     <h:outputText value="Teclados" rendered="#{lista.CATEQUI eq 'TC'}"/>
                 </p:column>
-                <p:column headerText="Precio" width="150">
+                <p:column headerText="Precio" width="90" style="text-align: right">
                     <h:outputText value="#{lista.PREEQUI}">
                         <f:convertNumber type="currency" currencySymbol="S/. "/>
                     </h:outputText>
@@ -66,18 +71,18 @@
                     <h:outputText value="Activo" rendered="#{lista.ESTEQU eq 'A'}"/>
                     <h:outputText value="Inactivo" rendered="#{lista.ESTEQU eq 'I'}"/>
                 </p:column>
-                <p:column width="40">
+                <p:column width="30">
                     <p:commandButton icon="ui-icon-pencil" oncomplete="PF('wdlgDatos').show();" id="tp" update=":dlgDatos">
                         <f:setPropertyActionListener value="#{lista}" target="#{equipoC.equipo}"/>
                     </p:commandButton>
-                    <p:tooltip value="MODIFICAR" position="left" for="tp"/>
+                    <p:tooltip value="Modificar" position="left" for="tp"/>
                 </p:column>
-                <p:column width="40">
+                <p:column width="30">
                     <p:commandButton icon="ui-icon-circle-close" actionListener="#{equipoC.eliminarC(lista)}" id="tlp"
                                      update="lstEqu :msg">
                         <p:confirm header="Confirmar" message="¿Desea eliminar?" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:tooltip value="ELIMINAR" position="left" for="tlp"/>
+                    <p:tooltip value="Eliminar" position="left" for="tlp"/>
                     <p:confirmDialog global="true">
                         <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
@@ -86,9 +91,10 @@
             </p:dataTable>
         </h:form>
 
-        <p:dialog id="dlgDatos" widgetVar="wdlgDatos" responsive="true" header="Modificar" modal="true">
+        <p:dialog id="dlgDatos" widgetVar="wdlgDatos" responsive="true" header="Modificar" modal="true"
+                  style="font-size: 13px" resizable="false" draggable="false">
             <h:form id="equ">
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="2" layout="grid">
                     <p:outputLabel value="Nombre"/>
                     <p:inputText value="#{equipoC.equipo.NOMEQUI}" required="true" 
                                  requiredMessage="Ingresar el nombre del equipo" maxlength="30">
