@@ -5,82 +5,105 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Equipo</title>
-        <f:event type="preRenderView" listener="#{equipoC.listar()}"/>
+        <title>Venta  de Equipo</title>
+        <f:event type="preRenderView" listener="#{loginC.securitySession()}"/>
     </h:head>
     <h:body>       
         <p:growl showDetail="true" life="1000" id="msg"/>        
-        <h:form id="venta">
-            <h1 style="color: coral">Venta</h1>
-            <p:panelMenu>
-                <p:submenu label="Menú">
-                    <p:menuitem value="Menú" url="../../index.xhtml"/>
-                </p:submenu>
-            </p:panelMenu>
-            
-            <p:panelGrid columns="2">
-                <p:outputLabel value="Cliente"/>
-                <p:autoComplete value="#{ventaC.venta.IDPER}" completeMethod="#{ventaC.completar}" emptyMessage="No existe"
-                                size="25" required="true" resultsMessage="Escribir el nombre del cliente"/>
-                <p:outputLabel value="Fecha"/>
-                <p:calendar value="#{ventaC.venta.FECVEN}" pattern="yyyy-MM-dd" mindate="@now" size="7"
-                            required="true" requiredMessage="Ingresar fecha de Venta"/>                                    
-                <p:commandButton value="Guardar" actionListener="#{ventaC.registrarC()}" update="venta :msg"/>
-            </p:panelGrid>
-        </h:form>
-        
-        <h:form id="detalle">
-             <br/>
-            <p:panelGrid columns="6">
-                <p:outputLabel value="Producto"/>
-                <p:autoComplete value="#{ventaDetC.ventaDet.IDEQU}" completeMethod="#{ventaDetC.completar}" emptyMessage="No existe"
-                                required="true" resultsMessage="Escribir el nombre del equipo"/>
-                <p:outputLabel value=" "/>
-                <p:outputLabel value="Cantidad"/>
-                <p:spinner value="#{ventaDetC.ventaDet.CANT}" required="true" requiredMessage="Ingresar cantidad" min="1" max="9999" maxlength="4">
-                    <p:keyFilter regEx="/[0-9]/"/>
-                </p:spinner>
-                <p:commandButton icon="ui-icon-pencil" id="tool" actionListener="#{ventaDetC.registrarC()}" update="detalle :msg"/>
-                <p:tooltip for="tool" value="Guardar" position="left"/>
-            </p:panelGrid>
-        </h:form>
-        
-        <h:form id="listVen">
-            <br/>
-            <p:dataTable id="tbPer" reflow="true" paginator="true" value="#{ventaDetC.listVentd}" var="lista" rows="10">
-                <p:column headerText="Equipo" width="200">
-                    <h:outputLabel value="#{lista.IDEQU}"/>
-                </p:column>
-                <p:column headerText="Cantidad" >
-                    <h:outputText value="#{lista.CANT}"/>
-                </p:column>
-                <p:column headerText="Precio" >
-                    <h:outputText value=" "/>
-                </p:column>
-                <p:column width="40">
-                    <p:commandButton icon="ui-icon-pencil" oncomplete="PF('wdlgDatos').show();" id="tp" update=":dlgDatos">
-                        <f:setPropertyActionListener value="#{lista}" target="#{ventaDetC.ventaDet}"/>
-                    </p:commandButton>
-                    <p:tooltip value="MODIFICAR" position="left" for="tp"/>
-                </p:column>
-            </p:dataTable>
+        <h:form>
+            <center>
+                <h1 style="color: coral">Venta de Equipo</h1>                
+            </center>
         </h:form>
 
-        <p:dialog id="dlgDatos" widgetVar="wdlgDatos" responsive="true" header="Modificar" modal="true">
-            <h:form id="vnt">
-                <p:panelGrid columns="5">
-                <p:outputLabel value="Producto"/>
-                <p:autoComplete value="#{ventaDetC.ventaDet.IDEQU}" completeMethod="#{ventaDetC.completar}" emptyMessage="No existe"
-                                required="true" resultsMessage="Escribir el nombre del equipo"/>
-                <p:outputLabel value=" "/>
-                <p:outputLabel value="Cantidad"/>
-                <p:spinner value="#{ventaDetC.ventaDet.CANT}" required="true" requiredMessage="Ingresar cantidad" min="1" max="9999" maxlength="4">
-                    <p:keyFilter regEx="/[0-9]/"/>
-                </p:spinner>
-                <p:commandButton value="Modificar" actionListener="#{ventaDetC.modificarC()}" update="vnt :msg :listVen"
-                                 oncomplete="if(args &amp;&amp; !args.validationFailed)PF('wdlgDatos').hide();"/>
-            </p:panelGrid>
-            </h:form>
-        </p:dialog>
+        <h:form id="venta">
+            <p:panelGrid columns="2" layout="grid">
+                <p:column>
+                    <p:panel header="Datos del Cliente" style="font-size: 14px">
+                        <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                            <p:outputLabel value="Cliente"/>
+                            <p:autoComplete value="#{ventaC.venta.IDPER}" completeMethod="#{ventaC.completar}" emptyMessage="No existe" placeholder="Nombre de persona"
+                                            required="true" resultsMessage="Escribir el nombre del cliente"/>
+                            <p:outputLabel value="Fecha"/>
+                            <p:calendar value="#{ventaC.time}" pattern="yyyy-MMM-dd" mindate="@now" size="10"
+                                        required="true" requiredMessage="Ingresar fecha de Venta"/>                                    
+                            <p:commandButton icon="ui-icon-circle-plus" actionListener="#{ventaC.registrarC()}" update=":msg" id="ma"/>
+                            <p:tooltip for="ma" value="Agregar" position="left"/>
+                        </p:panelGrid>
+                        <p:separator/>
+                        <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" style="font-size: 14px"
+                                     layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                            <p:outputLabel value="Equipo"/>
+                            <p:autoComplete value="#{ventaDetC.ventaDet.IDEQU}" completeMethod="#{ventaDetC.completar}" emptyMessage="No existe" placeholder="Nombre de equipo"/>
+                            <p:outputLabel value="Cantidad"/>
+                            <p:spinner value="#{ventaDetC.ventaDet.CANT}" required="true" size="2"
+                                       requiredMessage="Ingresar cantidad" min="1" max="9999" maxlength="4">
+                                <p:keyFilter regEx="/[0-9]/"/>
+                            </p:spinner>
+                            <p:commandButton icon="ui-icon-circle-plus" id="tool" actionListener="#{ventaDetC.registrar()}" update="venta :msg"/>
+                            <p:tooltip for="tool" value="Agregar" position="left"/>
+                        </p:panelGrid>
+                    </p:panel>                        
+                </p:column>
+
+                <p:panelGrid columns="1" layout="grid">
+                    <p:dataTable id="tbPer" reflow="true" paginator="true" value="#{ventaDetC.dao.datos}" 
+                                 var="lista" editable="true" sortBy="#{lista.IDVEN}"
+                                 rows="10" style="font-size: 13px" rowIndexVar="index">
+                        <p:column headerText="Nº" width="20" style="color: #007fff; text-align: center">
+                            <h:outputLabel value="#{index + 1}" style="color: black"/>
+                        </p:column>
+                        <p:column headerText="Equipo" width="188">
+                            <h:outputLabel value="#{lista.IDEQU}"/>
+                        </p:column>
+                        <p:column headerText="Cantidad" width="55" style="color: #007fff; text-align: center" >
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <center>
+                                        <h:outputText value="#{lista.CANT}" style="color: #000" />
+                                    </center>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputNumber id="modelCant" value="#{lista.CANT}" style="color: #000" minValue="1" maxValue="99">
+                                        <p:ajax update="tbPer"/>
+                                    </p:inputNumber>                  
+                                </f:facet>                                    
+                            </p:cellEditor>                                                            
+                        </p:column>
+                        <p:column headerText="Precio" width="75" style="color: #007fff; text-align: right">
+                            <center>
+                                <h:outputText value="#{lista.PREVEN}" style="color: #000">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column headerText="SubTotal" width="75" style="color: #007fff; text-align: right" >  
+                            <h:outputText value="#{lista.CANT * lista.PREVEN}" style="color: #000">
+                                <f:convertNumber type="currency"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:summaryRow>
+                            <p:column colspan="4" style="color: #FFA534; text-align: right">     
+                                <h:outputText value="Total" style="font-weight: bold; color: white"/>
+                            </p:column>
+                            <p:column colspan="3" style="color: #FFA534; text-align: left">
+                                <h:outputText value="#{ventaDetC.dao.total()}" style="font-weight: bold; color: black">
+                                    <f:convertNumber type="currency" currencySymbol="S/" />
+                                </h:outputText>
+                            </p:column>
+                        </p:summaryRow>
+                        <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+                        <p:column width="35">
+                            <center>
+                                <p:commandButton icon="ui-icon-circle-close" actionListener="#{ventaDetC.dao.delete(index)}" update="tbPer"/>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="Guardar" update="venta" actionListener="#{ventaDetC.registrarC()}"/>                    
+                </p:panelGrid>                                   
+            </p:panelGrid>            
+        </h:form>           
     </h:body>
 </html>

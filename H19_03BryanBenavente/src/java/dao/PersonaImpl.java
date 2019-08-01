@@ -6,12 +6,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Persona;
+import services.Encriptacion;
 
 public class PersonaImpl extends Conexion implements ICRUD<Persona>{
 
+    Encriptacion enc = new Encriptacion();
+    
     @Override
     public void registrar(Persona persona) throws Exception {
-        try {
+        try {            
             String sql = "INSERT INTO PERSONA.PERSONA(NOMPER, APEPER, DNIPER, CELPER, DIRPER, CODUBI, TIPPER, IDSUC, USUPER, PASPER) "
                     + "VALUES(?,?,?,?,?,?,?,'1',?,?)";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
@@ -23,7 +26,7 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
             ps.setString(6, persona.getCODUBI());
             ps.setString(7, persona.getTIPPER());
             ps.setString(8, persona.getUSUPER());
-            ps.setString(9, persona.getPASPER());
+            ps.setString(9, enc.encriptar(persona.getPASPER()));
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -45,7 +48,11 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
             ps.setString(6, persona.getCODUBI());
             ps.setString(7, persona.getTIPPER());
             ps.setString(8, persona.getUSUPER());
-            ps.setString(9, persona.getPASPER());
+            if(persona.getPASPER() != null){
+               ps.setString(9, enc.encriptar(persona.getPASPER()));
+            } else {
+                ps.setString(9, "");
+            }
             ps.setInt(10, persona.getIDPER());
             ps.executeUpdate();
             ps.close();

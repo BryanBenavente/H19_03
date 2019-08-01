@@ -1,32 +1,82 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      lang="en">
+    <head>
+        <title>CompuTech</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="resources/est/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/vendor/animate/animate.css" rel="stylesheet" type="text/css"/>        
+        <link href="resources/est/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/vendor/animsition/css/animsition.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/vendor/select2/select2.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/css/main.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/est/css/util.css" rel="stylesheet" type="text/css"/>
+    </head>
     <h:body>
-        <h:form>
-            <p:commandButton value="Menú" oncomplete="PF('menu').show();"/>
-            <p:sidebar  widgetVar="menu" baseZIndex="10000">
-                <h1>Menú</h1>
-                <p:panelMenu>
-                    <p:submenu label="Persona">
-                        <p:menuitem value="Persona" url="faces/vistas/persona/Persona.xhtml"/>
-                    </p:submenu>
-                    <p:submenu label="Equipo">                        
-                        <p:menuitem value="Equipo" url="faces/vistas/equipo/Equipo.xhtml"/>
-                    </p:submenu>
-                    <p:submenu label="Sucursal">
-                        <p:menuitem value="Sucursal" url="faces/vistas/sucursal/Sucursal.xhtml"/>
-                    </p:submenu>
-                    <p:submenu label="Venta">
-                        <p:menuitem value="Venta" url="faces/vistas/venta/Venta.xhtml"/>
-                    </p:submenu>
-                </p:panelMenu>
-            </p:sidebar>
-        </h:form>
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+                    <h:form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-34">
+                            Account Login
+                        </span>
+
+                        <div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
+                            <p:inputText value="#{loginC.user}" id="first-name" class="input100" type="text" placeholder="User name"/>    
+                        </div>
+                        <div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
+                            <p:inputText value="#{loginC.pass}" class="input100" type="password" placeholder="Password"/>
+                        </div>
+                        <div class="container-login100-form-btn">
+                            <p:commandButton class="login100-form-btn" value="Sign in" actionListener="#{loginC.ingresar()}"/>
+                        </div>
+
+                        <div class="w-full text-center p-t-27 p-b-239">
+                            <span class="txt1">
+                                Forgot
+                            </span>
+
+                            <a href="#" class="txt2">
+                                User name / password?
+                            </a>
+                        </div>
+
+                        <div class="w-full text-center">
+                            <a href="#" class="txt3">
+                                Sign Up
+                            </a>
+                        </div>
+                    </h:form>
+                    <div class="login100-more" style="background-image: url('resources/img/fondo.jpg');"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dropDownSelect1"></div>
+
+        <script src="resources/est/vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
+        <script src="resources/est/vendor/animsition/js/animsition.min.js" type="text/javascript"></script>
+        <script src="resources/est/vendor/bootstrap/js/popper.js" type="text/javascript"></script>
+        <script src="resources/est/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="resources/est/vendor/select2/select2.min.js" type="text/javascript"></script>
+        <script>
+            $(".selection-2").select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $('#dropDownSelect1')
+            });
+        </script>
+        <script src="resources/est/vendor/daterangepicker/moment.min.js" type="text/javascript"></script>
+        <script src="resources/est/vendor/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+        <script src="resources/est/vendor/countdowntime/countdowntime.js" type="text/javascript"></script>
+        <script src="resources/est/js/main.js" type="text/javascript"></script>
     </h:body>
 </html>
-

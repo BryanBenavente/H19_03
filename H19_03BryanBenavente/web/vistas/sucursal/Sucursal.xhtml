@@ -6,6 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Sucursal</title>
+        <f:event type="preRenderView" listener="#{loginC.securitySession()}"/>
         <f:event type="preRenderView" listener="#{sucursalC.listar()}"/>
     </h:head>
     <h:body>      
@@ -20,7 +21,7 @@
         <p:dialog id="dato" widgetVar="dato" modal="true" header="Registro de Sucursal" responsive="true" 
                   style="font-size: 13px" resizable="false" draggable="false">
             <h:form id="sucursal">            
-                <p:panelGrid columns="2" layout="grid">
+                <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" styleClass="ui-panelgrid-blank">
                     <p:outputLabel value="Nombre"/>
                     <p:inputText value="#{sucursalC.sucursal.NOMSUC}" required="true" 
                                  requiredMessage="Ingresar el nombre de la sucursal" maxlength="30">
@@ -88,7 +89,7 @@
         <p:dialog id="dlgDatos" widgetVar="wdlgDatos" responsive="true" header="Modificar" modal="true"
                   style="font-size: 13px" resizable="false" draggable="false">
             <h:form id="suc">
-                <p:panelGrid columns="2" layout="grid">
+                <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" styleClass="ui-panelgrid-blank">
                     <p:outputLabel value="Nombre"/>
                     <p:inputText value="#{sucursalC.sucursal.NOMSUC}" required="true" 
                                  requiredMessage="Ingresar el nombre de la sucursal" maxlength="30">

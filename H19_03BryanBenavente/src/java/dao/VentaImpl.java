@@ -13,12 +13,13 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
     @Override
     public void registrar(Venta venta) throws Exception {
         try {
-            String sql = "INSERT INTO VENTA.VENTA (IDPER, FECVEN, ESTVEN)"
-                    + "VALUES(?,?,'A')";
+            String sql = "INSERT INTO VENTA.VENTA (IDVEN, IDPER, FECVEN, ESTVEN)"
+                    + "VALUES(?,?,?,'A')";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1, codigo(venta.getIDPER()));
+            ps.setInt(1, venta.getIDVEN());
+            ps.setString(2, codigo(venta.getIDPER()));
             SimpleDateFormat forma = new SimpleDateFormat("yyyy/MM/dd");
-            ps.setString(2, forma.format(venta.getFECVEN()));
+            ps.setString(3, forma.format(venta.getFECVEN()));
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -116,6 +117,27 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
             System.out.println("Error al buscar persona: " + e.getMessage());
             return null;
         }       
+    }
+    
+    public void codigoV(Venta venta) throws Exception {
+        try {
+            String res = "";
+            String sql = "SELECT TOP(1) MAX(IDVEN) AS IDVEN FROM VENTA.VENTA";
+            PreparedStatement ps = this.conectar().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            res = rs.getString(1);
+            if (res == null) {
+                venta.setIDVEN(Integer.parseInt("1"));
+            } else {
+                int a = Integer.parseInt(res);
+                int cod = a + 1;
+                venta.setIDVEN(cod);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Error CodigoDAO: " + e.getMessage());
+        }
     }
     
 }

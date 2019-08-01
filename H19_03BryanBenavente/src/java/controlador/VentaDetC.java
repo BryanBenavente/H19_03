@@ -23,10 +23,22 @@ public class VentaDetC implements Serializable {
         dao = new VentaDetImpl();
         listVentd = new ArrayList();
     }
+    public void registrar() {
+        try {
+            dao.codig(ventaDet);
+            dao.agregarP(ventaDet);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro", "Ingresado con éxito"));
+            limpiar();
+        } catch (Exception e) {
+            System.out.println("Error al registraC: " + e.getMessage());
+        }
+    }
+    
     
     public void registrarC(){
         try {
-            dao.registrar(ventaDet);
+            dao.registrar();
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Registro ingresado con éxito"));
             limpiar();
@@ -36,20 +48,7 @@ public class VentaDetC implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "No se pudo registrar"));
         }
     }
-    
-    public void modificarC(){
-        try {
-            dao.modificar(ventaDet);
-            FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Registro modificado con éxito"));
-            limpiar();
-        } catch (Exception e) {
-            System.out.println("Error al modificarC: " + e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "No se pudo realizar la modificación"));
-        }
-    }
-        
+           
     public List<VentaDet> listar(){
         try {
             listVentd = dao.listar();

@@ -8,7 +8,18 @@ public class VentaDet implements Serializable{
     private String IDVEN;
     private String IDEQU;
     private int CANT;
+    private double PREVEN;
 
+    public VentaDet(String IDVEN, String IDEQU, int CANT, double PREVEN) {
+        this.IDVEN = IDVEN;
+        this.IDEQU = IDEQU;
+        this.CANT = CANT;
+        this.PREVEN = PREVEN;
+    }    
+    
+    public VentaDet() {
+    }   
+    
     public int getIDVENDET() {
         return IDVENDET;
     }
@@ -39,6 +50,14 @@ public class VentaDet implements Serializable{
 
     public void setCANT(int CANT) {
         this.CANT = CANT;
+    }
+
+    public double getPREVEN() {
+        return PREVEN;
+    }
+
+    public void setPREVEN(double PREVEN) {
+        this.PREVEN = PREVEN;
     }
             
 }

@@ -6,6 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Persona</title>
+        <f:event type="preRenderView" listener="#{loginC.securitySession()}"/>
         <f:event type="preRenderView" listener="#{personaC.listar()}"/>
     </h:head>
     <h:body> 
@@ -13,13 +14,16 @@
         <h:form>
             <center>
                 <h1 style="color: coral">Lista de Persona</h1>
-                <p:commandButton value="Nuevo" oncomplete="PF('dato').show();" style="font-size: 13px" icon="ui-icon-plusthick"/>
+                <p:commandButton value="Nuevo" oncomplete="PF('dato').show();" style="font-size: 13px" icon="ui-icon-plusthick" actionListener="#{personaC.limpiar()}">
+                    <p:ajax update=":persona"/>
+                </p:commandButton>
             </center>
         </h:form>
 
-        <p:dialog id="dato" widgetVar="dato" modal="true" header="Registrar Persona" responsive="true">
+        <p:dialog id="dato" widgetVar="dato" modal="true" header="Registrar Persona" responsive="true" 
+                  style="font-size: 13px" draggable="false" resizable="false">
             <h:form id="persona">            
-                <p:panelGrid columns="2" >
+                <p:panelGrid columns="4" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                     <p:outputLabel value="Nombres"/>
                     <p:inputText value="#{personaC.persona.NOMPER}" required="true" 
                                  requiredMessage="Ingresar el nombre de la persona" maxlength="30">
@@ -64,10 +68,14 @@
                     <p:outputLabel value="1" />    
                     <p:outputLabel value="Usuario"/>
                     <p:inputText value="#{personaC.persona.USUPER}" maxlength="10"/>   
-                    <p:outputLabel value="Contraseña"/>
-                    <p:inputText value="#{personaC.persona.PASPER}" maxlength="10"/>
+                    <h:outputLabel for="pwd1" value="Contraseña" />
+                    <p:password id="pwd1" value="#{personaC.persona.PASPER}" match="pwd2" label="Password 1" required="true" 
+                                requiredMessage="Ingresar Contraseña" maxlength="10"/>
+                    <h:outputLabel for="pwd2" value="Contraseña" />
+                    <p:password id="pwd2" value="#{personaC.persona.PASPER}" label="Password 2" required="true" 
+                                requiredMessage="Repetir Contraseña" maxlength="10"/>
                     <p:commandButton value="Guardar" actionListener="#{personaC.registrarC()}" update="persona :msg :lstPersona"/>
-                    <p:commandButton value="Cerrar" oncomplete="PF('dato').hide();" />
+                    <p:commandButton value="Cerrar" oncomplete="PF('dato').hide();" />                    
                 </p:panelGrid>
             </h:form>
         </p:dialog>
@@ -120,9 +128,10 @@
             </p:dataTable>
         </h:form>
 
-        <p:dialog id="dlgDatos" widgetVar="wdlgDatos" responsive="true" header="Modificar" modal="true">
+        <p:dialog id="dlgDatos" widgetVar="wdlgDatos" responsive="true" header="Modificar" modal="true"
+                  style="font-size: 13px" resizable="false" draggable="false">
             <h:form id="per">
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="4" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                     <p:outputLabel value="Nombres"/>
                     <p:inputText value="#{personaC.persona.NOMPER}" required="true" 
                                  requiredMessage="Ingresar el nombre de la persona" maxlength="30">
@@ -164,11 +173,28 @@
                         <f:selectItem itemValue="C" itemLabel="Cliente"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Sucursal"/>
-                    <p:outputLabel value="1" />   
-                    <p:outputLabel value="Usuario"/>
-                    <p:inputText value="#{personaC.persona.USUPER}" maxlength="10"/>   
-                    <p:outputLabel value="Contraseña"/>
-                    <p:inputText value="#{personaC.persona.PASPER}" maxlength="10"/>
+                    <p:outputLabel value="1" />    
+                    <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
+                        <p:outputLabel value="Usuario"/>                        
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
+                        <p:inputText value="#{personaC.persona.USUPER}" maxlength="10"/>                       
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
+                        <h:outputLabel for="pwd1" value="Contraseña" />
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
+                        <p:password id="pwd1" value="#{personaC.persona.PASPER}" match="pwd2" label="Password 1" required="true" 
+                                    requiredMessage="Ingresar Contraseña" maxlength="10"/>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
+                        <h:outputLabel for="pwd2" value="Contraseña" />
+                    </h:panelGroup>                                        
+                    <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
+                        <p:password id="pwd2" value="#{personaC.persona.PASPER}" label="Password 2" required="true" 
+                                    requiredMessage="Repetir Contraseña" maxlength="10"/>
+                    </h:panelGroup>                                                
+                    <p:outputLabel value=""/>
                     <p:commandButton value="Modificar" actionListener="#{personaC.modificarC()}" update="per :msg :lstPersona"
                                      oncomplete="if(args &amp;&amp; !args.validationFailed)PF('wdlgDatos').hide();"/>
                 </p:panelGrid>

@@ -5,6 +5,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -17,15 +18,19 @@ public class VentaC implements Serializable {
     private Venta venta;
     private VentaImpl dao; 
     private List<Venta> listaVent;
+    private Date time;
     
     public VentaC() {
         venta = new Venta();
         dao = new VentaImpl();
         listaVent = new ArrayList();
+        time = new Date();
     }
     
     public void registrarC(){
         try {
+            dao.codigoV(venta);
+            venta.setFECVEN(time);
             dao.registrar(venta);
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Registro ingresado con éxito"));
@@ -108,4 +113,13 @@ public class VentaC implements Serializable {
     public void setListaVent(List<Venta> listaVent) {
         this.listaVent = listaVent;
     }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+    
 }

@@ -8,9 +8,16 @@ public class Equipo implements Serializable{
     private String NOMEQUI;
     private String DESCEQU;
     private String CATEQUI;
-    private double PREEQUI;
     private String ESTEQU; 
-
+    private String MAREQU;
+    private String IMGEQU;
+    private int CANTEQU;
+    
+    //Variables de tabla Precio
+    private double PRECOM;
+    private double PREVEN;
+    private String ESTPRE;
+    
     public int getIDEQU() {
         return IDEQU;
     }
@@ -43,20 +50,60 @@ public class Equipo implements Serializable{
         this.CATEQUI = CATEQUI;
     }
 
-    public double getPREEQUI() {
-        return PREEQUI;
-    }
-
-    public void setPREEQUI(double PREEQUI) {
-        this.PREEQUI = PREEQUI;
-    }
-
     public String getESTEQU() {
         return ESTEQU;
     }
 
     public void setESTEQU(String ESTEQU) {
         this.ESTEQU = ESTEQU;
+    }
+
+    public String getMAREQU() {
+        return MAREQU;
+    }
+
+    public void setMAREQU(String MAREQU) {
+        this.MAREQU = MAREQU;
+    }
+
+    public String getIMGEQU() {
+        return IMGEQU;
+    }
+
+    public void setIMGEQU(String IMGEQU) {
+        this.IMGEQU = IMGEQU;
+    }
+
+    public int getCANTEQU() {
+        return CANTEQU;
+    }
+
+    public void setCANTEQU(int CANTEQU) {
+        this.CANTEQU = CANTEQU;
+    }
+
+    public double getPRECOM() {
+        return PRECOM;
+    }
+
+    public void setPRECOM(double PRECOM) {
+        this.PRECOM = PRECOM;
+    }
+
+    public double getPREVEN() {
+        return PREVEN;
+    }
+
+    public void setPREVEN(double PREVEN) {
+        this.PREVEN = PREVEN;
+    }
+
+    public String getESTPRE() {
+        return ESTPRE;
+    }
+
+    public void setESTPRE(String ESTPRE) {
+        this.ESTPRE = ESTPRE;
     }
     
 }
