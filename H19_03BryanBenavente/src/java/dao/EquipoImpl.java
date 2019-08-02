@@ -12,8 +12,8 @@ public class EquipoImpl extends Conexion implements ICRUD<Equipo> {
     @Override
     public void registrar(Equipo equipo) throws Exception {
         try {
-            String sql = "INSERT INTO VENTA.EQUIPO (NOMEQUI, MAREQU, DESCEQU, CATEQUI, IMGEQU)"
-                    + "VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO VENTA.EQUIPO (NOMEQUI, MAREQU, DESCEQU, CATEQUI, IMGEQU, CANTEQU)"
+                    + "VALUES(?,?,?,?,?,0)";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, equipo.getNOMEQUI());
             ps.setString(2, equipo.getMAREQU());

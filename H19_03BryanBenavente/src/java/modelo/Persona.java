@@ -13,6 +13,7 @@ public class Persona implements Serializable{
     private String CODUBI;
     private String TIPPER;
     private String IDSUC;
+    private String NOMSUC;
     private String USUPER;
     private String PASPER;
     private String ESTPER;
@@ -89,6 +90,14 @@ public class Persona implements Serializable{
         this.IDSUC = IDSUC;
     }
 
+    public String getNOMSUC() {
+        return NOMSUC;
+    }
+
+    public void setNOMSUC(String NOMSUC) {
+        this.NOMSUC = NOMSUC;
+    }
+
     public String getUSUPER() {
         return USUPER;
     }
@@ -111,6 +120,6 @@ public class Persona implements Serializable{
 
     public void setESTPER(String ESTPER) {
         this.ESTPER = ESTPER;
-    }        
+    }
     
 }

@@ -5,7 +5,9 @@ import java.util.Date;
 public class Movimiento {
     
     private int IDPER;
+    private String NOMPER;
     private int IDEQU;
+    private String NOMEQU;
     private Date FECMOV;
     private int CANTEQU;
     private String ESTMOV;
@@ -19,12 +21,28 @@ public class Movimiento {
         this.IDPER = IDPER;
     }
 
+    public String getNOMPER() {
+        return NOMPER;
+    }
+
+    public void setNOMPER(String NOMPER) {
+        this.NOMPER = NOMPER;
+    }
+
     public int getIDEQU() {
         return IDEQU;
     }
 
     public void setIDEQU(int IDEQU) {
         this.IDEQU = IDEQU;
+    }
+
+    public String getNOMEQU() {
+        return NOMEQU;
+    }
+
+    public void setNOMEQU(String NOMEQU) {
+        this.NOMEQU = NOMEQU;
     }
 
     public Date getFECMOV() {
@@ -58,5 +76,5 @@ public class Movimiento {
     public void setTIPMOV(String TIPMOV) {
         this.TIPMOV = TIPMOV;
     }
-    
+
 }

@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import modelo.VentaDet;
 
@@ -11,7 +13,7 @@ public class VentaDetImpl extends Conexion {
 
     private List<VentaDet> datos;
     private double precio;
-    
+
     public VentaDetImpl() {
         datos = new ArrayList();
     }
@@ -55,12 +57,32 @@ public class VentaDetImpl extends Conexion {
                 ps.setString(1, u.getIDVEN());
                 ps.setString(2, this.codigo(u.getIDEQU()));
                 ps.setInt(3, u.getCANT());
-                ps.executeUpdate();                
+                ps.executeUpdate();
+            }
+            ps.close();            
+        } catch (Exception e) {
+            System.out.println("Error al registrar VdI: " + e.getMessage());
+        }
+    }
+
+    public void registrarM() {
+        String sql = "INSERT INTO VENTA.MOVIMIENTO(IDPER, IDEQU, FECMOV, CANTMOV, TIPMOV, ESTMOV) VALUES(?,?,?,?,'V','A')";
+        SimpleDateFormat forma = new SimpleDateFormat("yyyy/MM/dd");
+        Date fecha = new Date();
+        try {
+            PreparedStatement ps = this.conectar().prepareStatement(sql);
+            int insertions = 0;
+            for (VentaDet u : datos) {
+                ps.setString(1, "1");
+                ps.setString(2, this.codigo(u.getIDEQU()));                
+                ps.setString(3, forma.format(fecha));
+                ps.setInt(4, u.getCANT());
+                ps.executeUpdate();
             }
             ps.close();
             limpiar();
         } catch (Exception e) {
-            System.out.println("Error al registrar VdI: " + e.getMessage());
+            System.out.println("Error en registrarMov: " + e.getMessage());
         }
     }
 
@@ -145,9 +167,7 @@ public class VentaDetImpl extends Conexion {
             System.out.println("Error CodigoDAO codig(): " + e.getMessage());
         }
     }
-    
-    
-    
+
     //Generado
     public List<VentaDet> getDatos() {
         return datos;

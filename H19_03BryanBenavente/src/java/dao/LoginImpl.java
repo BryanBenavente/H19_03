@@ -6,6 +6,9 @@ import modelo.Persona;
 
 public class LoginImpl extends Conexion{
 
+    private String nom;
+    private int id;
+    
     public Persona startSession(String User, String Pass) {
         try {
             Persona login = null;
@@ -23,12 +26,28 @@ public class LoginImpl extends Conexion{
                 login.setTIPPER(rs.getString("TIPPER"));
                 login.setUSUPER(User);
                 login.setPASPER(Pass);
-            }
+            }            
             return login;
         } catch (Exception e) {
             System.out.println("ERROR EN LoginPImpl: " + e.getMessage());
             return null;
         }
+    }
+    
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

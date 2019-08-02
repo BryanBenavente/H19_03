@@ -17,6 +17,7 @@ public class PersonaC implements Serializable {
     private Persona persona;
     private PersonaImpl dao;
     private List<Persona> listaPers;
+    private List<Persona> sucursal;
     
     public PersonaC() {
         persona = new Persona();
@@ -65,6 +66,7 @@ public class PersonaC implements Serializable {
     public List<Persona> listar(){
         try {
             listaPers = dao.listar();
+            sucursal= dao.lista();
         } catch (Exception e) {
             System.out.println("Error al listarC: " + e.getMessage());
         }
@@ -100,6 +102,14 @@ public class PersonaC implements Serializable {
 
     public void setListaPers(List<Persona> listaPers) {
         this.listaPers = listaPers;
+    }
+
+    public List<Persona> getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(List<Persona> sucursal) {
+        this.sucursal = sucursal;
     }
     
 }

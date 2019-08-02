@@ -71,16 +71,25 @@
                     </h:form>
                 </p:tab>
                 <p:tab title="Ingreso">
-                    <h:form>
+                    <h:form id="ingreso">
                         <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Personal"/> 
-                            <p:inputText value="Bryan Paúl Benavente Casas" maxlength="30"/>
+                            <p:selectOneMenu value="#{movimientoC.movimiento.IDPER}" filter="true" style="width: 150px" height="100">
+                                <f:selectItem itemLabel="Seleccionar Persona"/>
+                                <f:selectItems value="#{movimientoC.persona}" var="listaP"
+                                               itemLabel="#{listaP.NOMPER}" itemValue="#{listaP.IDPER}" />                      
+                            </p:selectOneMenu>
                             <p:outputLabel value="Fecha"/>
                             <p:calendar value="#{movimientoC.fecha}" pattern="yyyy-MM-dd"/>
                             <p:outputLabel value="Equipo"/>
-                            <p:inputText value="#{movimientoC.movimiento.IDEQU}" maxlength="30"/>
+                            <p:selectOneMenu value="#{movimientoC.movimiento.IDEQU}" filter="true" style="width: 150px" height="100">
+                                <f:selectItem itemLabel="Seleccionar Equipo"/>
+                                <f:selectItems value="#{movimientoC.equipo}" var="listaP"
+                                               itemLabel="#{listaP.NOMEQU}" itemValue="#{listaP.IDEQU}" />                      
+                            </p:selectOneMenu>
                             <p:outputLabel value="Cantidad"/>
                             <p:spinner value="#{movimientoC.movimiento.CANTEQU}" maxlength="4" min="1" max="9999"/>
+                            <p:commandButton value="Guardar" actionListener="#{movimientoC.registrar()}" update=":msg ingreso"/>
                         </p:panelGrid>
                     </h:form>
                 </p:tab>
@@ -156,7 +165,9 @@
                         <f:selectItem itemLabel="Proyectores" itemValue="PY"/>
                         <f:selectItem itemLabel="Tablet" itemValue="TB"/>
                         <f:selectItem itemLabel="Periféricos" itemValue="PF"/>
-                    </p:selectOneMenu>                                                        
+                    </p:selectOneMenu>  
+                    <p:outputLabel value="Cantidad"/>
+                    <p:outputLabel value="#{equipoC.equipo.CANTEQU}"/>
                     <p:outputLabel value="Imagen"/>
                     <p:column>
                         <p:graphicImage value="#{equipoC.equipo.IMGEQU}" alt="220" width="220"/>

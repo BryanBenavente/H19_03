@@ -65,7 +65,11 @@
                         <f:selectItem itemValue="C" itemLabel="Cliente"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Sucursal"/>
-                    <p:outputLabel value="1" />    
+                    <p:selectOneMenu value="#{personaC.persona.IDSUC}" filter="true" style="width: 170px" height="100">
+                                <f:selectItem itemLabel="Seleccionar Equipo"/>
+                                <f:selectItems value="#{personaC.sucursal}" var="listaP"
+                                               itemLabel="#{listaP.NOMSUC}" itemValue="#{listaP.IDSUC}" />                      
+                            </p:selectOneMenu>  
                     <p:outputLabel value="Usuario"/>
                     <p:inputText value="#{personaC.persona.USUPER}" maxlength="10"/>   
                     <h:outputLabel for="pwd1" value="Contraseña" />
@@ -173,7 +177,7 @@
                         <f:selectItem itemValue="C" itemLabel="Cliente"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Sucursal"/>
-                    <p:outputLabel value="1" />    
+                    <p:outputLabel value="#{personaC.persona.IDSUC}" />    
                     <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
                         <p:outputLabel value="Usuario"/>                        
                     </h:panelGroup>

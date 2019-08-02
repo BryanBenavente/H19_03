@@ -39,6 +39,7 @@ public class VentaDetC implements Serializable {
     public void registrarC(){
         try {
             dao.registrar();
+            dao.registrarM();
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Registro ingresado con éxito"));
             limpiar();

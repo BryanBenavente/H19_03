@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import modelo.Movimiento;
 import modelo.Persona;
 import services.Encriptacion;
 
@@ -17,8 +17,7 @@ public class LoginC implements Serializable {
     private LoginImpl dao;
     private Persona logn;
 
-    private String user;
-    private String pass;
+    private String user, pass;
     private Encriptacion en;
 
     public LoginC() {
@@ -29,7 +28,7 @@ public class LoginC implements Serializable {
 
     public void ingresar() throws Exception {
         try {
-            logn = dao.startSession(user, Encriptacion.encriptar(pass));
+            logn = dao.startSession(user, Encriptacion.encriptar(pass));            
             if (logn != null) {
                 switch (logn.getTIPPER()) {
                     case "A":
@@ -49,8 +48,8 @@ public class LoginC implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
+    }    
+    
     public void cerrarSesion() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         FacesContext.getCurrentInstance().getExternalContext().redirect("/H19_03BryanBenavente/faces/index.xhtml");

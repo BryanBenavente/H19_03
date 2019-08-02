@@ -16,7 +16,7 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
     public void registrar(Persona persona) throws Exception {
         try {            
             String sql = "INSERT INTO PERSONA.PERSONA(NOMPER, APEPER, DNIPER, CELPER, DIRPER, CODUBI, TIPPER, IDSUC, USUPER, PASPER) "
-                    + "VALUES(?,?,?,?,?,?,?,'1',?,?)";
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, persona.getNOMPER());
             ps.setString(2, persona.getAPEPER());
@@ -25,8 +25,9 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
             ps.setString(5, persona.getDIRPER());
             ps.setString(6, persona.getCODUBI());
             ps.setString(7, persona.getTIPPER());
-            ps.setString(8, persona.getUSUPER());
-            ps.setString(9, enc.encriptar(persona.getPASPER()));
+            ps.setString(8, persona.getIDSUC());
+            ps.setString(9, persona.getUSUPER());
+            ps.setString(10, enc.encriptar(persona.getPASPER()));
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -103,6 +104,29 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
             st.close();
         } catch (Exception e) {
             System.out.println("Error al listar PI: " + e.getMessage());
+            return null;
+        }
+        return lista;
+    }
+    
+    public List<Persona> lista() throws Exception {
+        List<Persona> lista;
+        Persona persona;
+        String sql = "SELECT IDSUC, NOMSUC FROM PERSONA.SUCURSAL WHERE ESTSUC = 'A'";
+        try {
+            lista = new ArrayList();
+            Statement st = this.conectar().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                persona = new Persona();
+                persona.setIDSUC(rs.getString("IDSUC"));
+                persona.setNOMSUC(rs.getString("NOMSUC"));
+                lista.add(persona);
+            }
+            rs.close();
+            st.close();
+        } catch (Exception e) {
+            System.out.println("Error en lista movimientoI: " + e.getMessage());
             return null;
         }
         return lista;
