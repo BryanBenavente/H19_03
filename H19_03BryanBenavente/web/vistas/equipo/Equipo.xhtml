@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Equipo</title>
-
+        <f:event type="preRenderView" listener="#{loginC.securitySession()}"/>
         <f:event type="preRenderView" listener="#{equipoC.listar()}"/>
     </h:head>
     <h:body>
@@ -20,15 +20,14 @@
 
         <p:dialog id="dato" widgetVar="dato" modal="true" header="Registro de Equipo" responsive="true"
                   style="font-size: 13px" resizable="false" draggable="false">
-            <p:tabView>
-                <p:tab title="Datos">
+            <p:tabView id="vn">
+                <p:ajax event="tabChange" update="ingreso" delay="1000"/>
+                <p:tab title="Datos" id="dt">
                     <h:form id="equipo">                                                            
                         <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Nombre"/>
                             <p:inputText value="#{equipoC.equipo.NOMEQUI}" required="true" 
-                                         requiredMessage="Ingresar el nombre del equipo" maxlength="30">
-                                <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
-                            </p:inputText>
+                                         requiredMessage="Ingresar el nombre del equipo" maxlength="30"/>
                             <p:outputLabel value="Marca"/>
                             <p:inputText value="#{equipoC.equipo.MAREQU}" required="true" requiredMessage="Ingresar marca">
                                 <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
@@ -70,25 +69,25 @@
                         <p:commandButton value="Guardar" actionListener="#{equipoC.registrarC()}" update="equipo :msg :lstEqu"/>
                     </h:form>
                 </p:tab>
-                <p:tab title="Ingreso">
+                <p:tab title="Ingreso" >
                     <h:form id="ingreso">
                         <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Personal"/> 
-                            <p:selectOneMenu value="#{movimientoC.movimiento.IDPER}" filter="true" style="width: 150px" height="100">
+                            <p:selectOneMenu value="#{movimientoC.movimiento.IDPER}" filter="true" style="width: 150px" 
+                                             height="100" required="true" requiredMessage="Seleccionar Persona">
                                 <f:selectItem itemLabel="Seleccionar Persona"/>
                                 <f:selectItems value="#{movimientoC.persona}" var="listaP"
                                                itemLabel="#{listaP.NOMPER}" itemValue="#{listaP.IDPER}" />                      
                             </p:selectOneMenu>
                             <p:outputLabel value="Fecha"/>
-                            <p:calendar value="#{movimientoC.fecha}" pattern="yyyy-MM-dd"/>
+                            <p:calendar value="#{movimientoC.fecha}" pattern="yyyy-MMM-dd"/>
                             <p:outputLabel value="Equipo"/>
-                            <p:selectOneMenu value="#{movimientoC.movimiento.IDEQU}" filter="true" style="width: 150px" height="100">
-                                <f:selectItem itemLabel="Seleccionar Equipo"/>
-                                <f:selectItems value="#{movimientoC.equipo}" var="listaP"
-                                               itemLabel="#{listaP.NOMEQU}" itemValue="#{listaP.IDEQU}" />                      
-                            </p:selectOneMenu>
+                            <p:autoComplete id="eqp" value="#{movimientoC.movimiento.IDEQU}" completeMethod="#{movimientoC.completar}" emptyMessage="No existe" placeholder="Nombre de equipo"
+                                            dropdown="true" required="true" resultsMessage="Escribir el nombre del equipo"/>
                             <p:outputLabel value="Cantidad"/>
-                            <p:spinner value="#{movimientoC.movimiento.CANTEQU}" maxlength="4" min="1" max="9999"/>
+                            <p:spinner value="#{movimientoC.movimiento.CANTEQU}" maxlength="4" min="1" max="9999">
+                                <p:keyFilter regEx="/[0-9]/"/>
+                            </p:spinner>
                             <p:commandButton value="Guardar" actionListener="#{movimientoC.registrar()}" update=":msg ingreso"/>
                         </p:panelGrid>
                     </h:form>
@@ -101,6 +100,14 @@
             <br/>
             <p:dataGrid id="tbEq" paginator="true" value="#{equipoC.listaEqup}" var="lista" style="font-size: 12px"
                         rowsPerPageTemplate="4,8,12" rows="8" columns="4" layout="grid">
+                <f:facet name="header">
+                    Lista de Equipos
+                    <div style="float: right">
+                        <h:commandLink actionListener="#{equipoC.reportEqp()}">
+                            <p:graphicImage url="../../resources/img/pdf.png" width="32" title="Catalogo"/>
+                        </h:commandLink>
+                    </div>
+                </f:facet>
                 <p:panel header="#{lista.NOMEQUI}" style="text-align:center">
                     <h:panelGrid columns="2" style="width:100%">
                         <p:column>
@@ -146,15 +153,11 @@
                 <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" styleClass="ui-panelgrid-blank">
                     <p:outputLabel value="Nombre"/>
                     <p:inputText value="#{equipoC.equipo.NOMEQUI}" required="true" 
-                                 requiredMessage="Ingresar el nombre del equipo" maxlength="30">
-                        <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
-                    </p:inputText>
+                                 requiredMessage="Ingresar el nombre del equipo" maxlength="30"/>
                     <p:outputLabel value="Marca"/>
                     <p:inputText value="#{equipoC.equipo.MAREQU}" required="true" requiredMessage="Ingresar marca">
                         <p:keyFilter regEx="/[A-Z a-z Ñ_ñ_ _á-é-í-ó-ú]/"/>
-                    </p:inputText>
-                    <p:outputLabel value="Descripción"/>
-                    <p:inputText value="#{equipoC.equipo.DESCEQU}" maxlength="30"/>
+                    </p:inputText>                                
                     <p:outputLabel value="Categoría"/>
                     <p:selectOneMenu value="#{equipoC.equipo.CATEQUI}">
                         <f:selectItem itemLabel="Seleccione" itemValue=""/>
@@ -165,9 +168,25 @@
                         <f:selectItem itemLabel="Proyectores" itemValue="PY"/>
                         <f:selectItem itemLabel="Tablet" itemValue="TB"/>
                         <f:selectItem itemLabel="Periféricos" itemValue="PF"/>
-                    </p:selectOneMenu>  
-                    <p:outputLabel value="Cantidad"/>
-                    <p:outputLabel value="#{equipoC.equipo.CANTEQU}"/>
+                    </p:selectOneMenu>                                                                                    
+                    <p:column>
+                        <p:outputLabel value="P. Compra"/>
+                        <br/>
+                        <p:inputText value="#{equipoC.pr1}" size="12"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="P. Venta"/>
+                        <br/>
+                        <p:inputText value="#{equipoC.pr2}" size="12"/>                                                
+                    </p:column>
+                </p:panelGrid>         
+                <p:separator/>
+                <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel value="Descripción"/>
+                    <p:inputTextarea rows="5" cols="25" counter="display" maxlength="200" value="#{equipoC.equipo.DESCEQU}" 
+                                     counterTemplate="{0} caracteres restantes." autoResize="false" />
+                    <br />
+                    <h:outputText id="display" />
                     <p:outputLabel value="Imagen"/>
                     <p:column>
                         <p:graphicImage value="#{equipoC.equipo.IMGEQU}" alt="220" width="220"/>
@@ -175,13 +194,9 @@
                             <p:tooltip for="img" value="Enlace de Imagen"/>
                         </p:inputText>
                     </p:column>
-                    <p:outputLabel value="P. Compra"/>
-                    <p:inputText value="#{equipoC.equipo.PRECOM}"/>
-                    <p:outputLabel value="P. Venta"/>
-                    <p:inputText value="#{equipoC.equipo.PREVEN}"/>                    
                     <p:commandButton value="Modificar" actionListener="#{equipoC.modificarC()}" update="equ :msg :lstEqu"
-                                     oncomplete="if(args &amp;&amp; !args.validationFailed)PF('wdlgDatos').hide();"/>
-                </p:panelGrid>
+                                 oncomplete="if(args &amp;&amp; !args.validationFailed)PF('wdlgDatos').hide();"/>
+                </p:panelGrid>                                    
             </h:form>
         </p:dialog>
     </h:body>

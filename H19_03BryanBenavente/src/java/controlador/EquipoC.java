@@ -6,10 +6,12 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import modelo.Equipo;
+import services.Reporte;
 
 @Named(value = "equipoC")
 @SessionScoped
@@ -20,6 +22,7 @@ public class EquipoC implements Serializable {
     private PrecioImpl daoP;
     private List<Equipo> listaEqup;
     private List<Integer> columns;
+    private Reporte reporte;
 
     //Variables
     private double pr1, pr2;
@@ -29,6 +32,7 @@ public class EquipoC implements Serializable {
         dao = new EquipoImpl();
         daoP = new PrecioImpl();
         listaEqup = new ArrayList();
+        reporte = new Reporte();
     }
 
     public void registrarC() {
@@ -127,6 +131,16 @@ public class EquipoC implements Serializable {
         }
     }
 
+    public void reportEqp(){
+        try {            
+            HashMap<String, Object> parameters = new HashMap();
+            reporte.exportarEquip(parameters);
+        } catch (Exception e) {
+            System.out.println("Error en reportEqp: " + e.getMessage());
+        }
+    }
+    
+    
     //Generado
     public Equipo getEquipo() {
         return equipo;

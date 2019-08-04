@@ -70,7 +70,7 @@ public class EquipoImpl extends Conexion implements ICRUD<Equipo> {
                 + "FROM VENTA.EQUIPO AS EQ\n"
                 + "	left join VENTA.PRECIO AS PE\n"
                 + "		ON PE.IDEQU = EQ.IDEQU\n"
-                + "WHERE PE.ESTPRE = 'A'\n"
+                + "WHERE PE.ESTPRE = 'A' and ESTEQU = 'A'\n"
                 + "ORDER BY EQ.IDEQU";
         try {
             Statement st = this.conectar().createStatement();

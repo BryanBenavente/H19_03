@@ -61,7 +61,7 @@ public class SucursalImpl extends Conexion implements ICRUD<Sucursal>{
     public List<Sucursal> listar() throws Exception {
         List<Sucursal> lista;
         Sucursal sucursal;
-        String sql ="SELECT * FROM PERSONA.SUCURSAL";
+        String sql ="SELECT * FROM PERSONA.SUCURSAL where ESTSUC = 'A'";
         try {
             Statement st = this.conectar().createStatement();
             ResultSet rs = st.executeQuery(sql);

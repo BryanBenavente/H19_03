@@ -6,8 +6,7 @@ public class Movimiento {
     
     private int IDPER;
     private String NOMPER;
-    private int IDEQU;
-    private String NOMEQU;
+    private String IDEQU;
     private Date FECMOV;
     private int CANTEQU;
     private String ESTMOV;
@@ -29,22 +28,14 @@ public class Movimiento {
         this.NOMPER = NOMPER;
     }
 
-    public int getIDEQU() {
+    public String getIDEQU() {
         return IDEQU;
     }
 
-    public void setIDEQU(int IDEQU) {
+    public void setIDEQU(String IDEQU) {
         this.IDEQU = IDEQU;
     }
-
-    public String getNOMEQU() {
-        return NOMEQU;
-    }
-
-    public void setNOMEQU(String NOMEQU) {
-        this.NOMEQU = NOMEQU;
-    }
-
+    
     public Date getFECMOV() {
         return FECMOV;
     }

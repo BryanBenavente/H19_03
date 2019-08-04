@@ -5,10 +5,12 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import modelo.VentaDet;
+import services.Reporte;
 
 @Named(value = "ventaDetC")
 @SessionScoped
@@ -17,12 +19,15 @@ public class VentaDetC implements Serializable {
     private VentaDet ventaDet;
     private VentaDetImpl dao;
     private List<VentaDet> listVentd;
+    private Reporte reporte;
     
     public VentaDetC() {
         ventaDet = new VentaDet();
         dao = new VentaDetImpl();
         listVentd = new ArrayList();
+        reporte = new Reporte();
     }
+    
     public void registrar() {
         try {
             dao.codig(ventaDet);
@@ -66,7 +71,18 @@ public class VentaDetC implements Serializable {
     public void limpiar(){
         ventaDet = new VentaDet();
     }
-    
+
+    public void reporteVenta(){
+        try {            
+            dao.codig(ventaDet);
+            System.out.println(ventaDet.getIDVEN());
+            HashMap<String, Object> parameters = new HashMap();
+            parameters.put("IDVEN", ventaDet.getIDVEN()); 
+            reporte.exportarBolet(parameters);
+        } catch (Exception e) {
+            System.out.println("Error en reporteVenta: " + e.getMessage());
+        }
+    }
     
     
     //Generado

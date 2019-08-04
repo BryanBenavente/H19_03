@@ -16,7 +16,6 @@ public class MovimientoC implements Serializable {
 
     private Movimiento movimiento;
     private MovimientoImpl dao;
-    private List<Movimiento> equipo;
     private List<Movimiento> persona;
     private Date fecha;
 
@@ -24,7 +23,6 @@ public class MovimientoC implements Serializable {
         movimiento = new Movimiento();
         dao = new MovimientoImpl();
         fecha = new Date();
-        equipo = dao.lista();          
         persona = dao.listaPer();
     }
 
@@ -44,6 +42,11 @@ public class MovimientoC implements Serializable {
         movimiento = new Movimiento();
     }
 
+    public List<String> completar(String consulta){
+        return dao.completarEq(consulta);
+    }
+    
+    
     //GENERADO
     public Movimiento getMovimiento() {
         return movimiento;
@@ -67,15 +70,7 @@ public class MovimientoC implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public List<Movimiento> getEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(List<Movimiento> equipo) {
-        this.equipo = equipo;
-    }
+    }    
 
     public List<Movimiento> getPersona() {
         return persona;

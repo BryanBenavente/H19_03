@@ -25,7 +25,11 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
             ps.setString(5, persona.getDIRPER());
             ps.setString(6, persona.getCODUBI());
             ps.setString(7, persona.getTIPPER());
-            ps.setString(8, persona.getIDSUC());
+            if(persona.getIDSUC() != null){
+                ps.setString(8, persona.getIDSUC());
+            } else {
+                ps.setString(8, null);
+            }
             ps.setString(9, persona.getUSUPER());
             ps.setString(10, enc.encriptar(persona.getPASPER()));
             ps.executeUpdate();
@@ -79,7 +83,7 @@ public class PersonaImpl extends Conexion implements ICRUD<Persona>{
     public List<Persona> listar() throws Exception {
         List<Persona> lista;
         Persona persona;
-        String sql ="SELECT * FROM PERSONA.PERSONA";
+        String sql ="SELECT * FROM PERSONA.PERSONA where ESTPER = 'A'";
         try {
             Statement st = this.conectar().createStatement();
             ResultSet rs = st.executeQuery(sql);

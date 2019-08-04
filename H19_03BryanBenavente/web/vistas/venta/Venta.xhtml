@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Venta  de Equipo</title>
-        
+        <f:event type="preRenderView" listener="#{loginC.securitySession()}"/>
     </h:head>
     <h:body>       
         <p:growl showDetail="true" life="1000" id="msg"/>        
@@ -50,6 +50,14 @@
                     <p:dataTable id="tbPer" reflow="true" paginator="true" value="#{ventaDetC.dao.datos}" 
                                  var="lista" editable="true" sortBy="#{lista.IDVEN}"
                                  rows="10" style="font-size: 13px" rowIndexVar="index">
+                        <f:facet name="header">
+                            Lista de Productos
+                            <div style="float: right">
+                                <h:commandLink actionListener="#{ventaDetC.reporteVenta()}">
+                                    <p:graphicImage url="../../resources/img/pdf.png" width="32" title="Boleta de Venta"/>
+                                </h:commandLink>
+                            </div>
+                        </f:facet>
                         <p:column headerText="Nº" width="20" style="color: #007fff; text-align: center">
                             <h:outputLabel value="#{index + 1}" style="color: black"/>
                         </p:column>

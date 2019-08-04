@@ -102,7 +102,7 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
     public List<String> completar(String consulta){
         ResultSet rs;
         List<String> lista;
-        String sql = "SELECT CONCAT(NOMPER,' ', APEPER) AS PERSONA FROM PERSONA.PERSONA WHERE CONCAT(NOMPER,' ', APEPER) LIKE ?"; 
+        String sql = "SELECT CONCAT(NOMPER,' ', APEPER) AS PERSONA FROM PERSONA.PERSONA WHERE ESTPER = 'A' AND CONCAT(NOMPER,' ', APEPER) LIKE ?"; 
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, "%"+consulta+"%");

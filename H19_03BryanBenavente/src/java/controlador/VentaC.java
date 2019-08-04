@@ -19,12 +19,13 @@ public class VentaC implements Serializable {
     private VentaImpl dao; 
     private List<Venta> listaVent;
     private Date time;
+
     
     public VentaC() {
         venta = new Venta();
         dao = new VentaImpl();
         listaVent = new ArrayList();
-        time = new Date();
+        time = new Date();        
     }
     
     public void registrarC(){
@@ -83,12 +84,8 @@ public class VentaC implements Serializable {
     public void limpiar(){
         venta = new Venta();
     }
-    
-    
-    
-    
-    
-    
+       
+            
     //Generado
     public Venta getVenta() {
         return venta;

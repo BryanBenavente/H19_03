@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Catalogo de Equipo</title>
+        <f:event type="preRenderView" listener="#{loginC.securitySession()}"/>
+        <f:event type="preRenderView" listener="#{equipoC.listar()}"/>
+    </h:head>
+    <h:body>
+        <h:form id="lstEqu">
+            <center>
+                <h1 style="color: coral">Lista de Equipos</h1>
+            </center>
+            <br/>
+            <p:dataGrid id="tbEq" paginator="true" value="#{equipoC.listaEqup}" var="lista" style="font-size: 12px"
+                        rowsPerPageTemplate="4,8,12" rows="8" columns="4" layout="grid">
+                <f:facet name="header">
+                    Lista de Equipos                    
+                </f:facet>
+                <p:panel header="#{lista.NOMEQUI}" style="text-align:center">
+                    <h:panelGrid columns="2" style="width:100%">
+                        <p:column>
+                            <p:graphicImage value="#{lista.IMGEQU}" width="70" height="70" /> 
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="Computadoras" rendered="#{lista.CATEQUI eq 'CP'}" style="font-weight: bold; color: #d88715"/>
+                            <h:outputText value="Laptops" rendered="#{lista.CATEQUI eq 'LP'}" style="font-weight: bold; color: #d88715"/>
+                            <h:outputText value="Monitores" rendered="#{lista.CATEQUI eq 'TV'}" style="font-weight: bold; color: #d88715"/>
+                            <h:outputText value="Dispositivo multifunción" rendered="#{lista.CATEQUI eq 'DM'}" style="font-weight: bold; color: #d88715"/>
+                            <h:outputText value="Proyectores" rendered="#{lista.CATEQUI eq 'PY'}" style="font-weight: bold; color: #d88715"/>
+                            <h:outputText value="Tablet" rendered="#{lista.CATEQUI eq 'TB'}" style="font-weight: bold; color: #d88715"/>
+                            <h:outputText value="Periféricos" rendered="#{lista.CATEQUI eq 'PF'}" style="font-weight: bold; color: #d88715"/>
+                            <br/>
+                            <h:outputLabel value="#{lista.MAREQU}"/>
+                            <br/>
+                            <h:outputLabel value="#{lista.PREVEN}" >
+                                <f:convertNumber type="currency" currencySymbol="S/."/>
+                            </h:outputLabel>                            
+                            <br/>
+                            <h:outputLabel value="Cantidad: #{lista.CANTEQU}" style="font-weight: bold; font-size: 14px"/>
+                        </p:column>    
+                    </h:panelGrid>
+                </p:panel>                                                
+            </p:dataGrid>
+        </h:form>
+    </h:body>
+</html>

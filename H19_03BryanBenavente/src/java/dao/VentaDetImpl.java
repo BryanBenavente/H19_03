@@ -135,7 +135,7 @@ public class VentaDetImpl extends Conexion {
                 + "FROM VENTA.EQUIPO AS EQ\n"
                 + "	LEFT JOIN VENTA.PRECIO AS PR\n"
                 + "		ON EQ.IDEQU = PR.IDEQU\n"
-                + "WHERE PR.ESTPRE = 'A' AND NOMEQUI LIKE ? ";
+                + "WHERE PR.ESTPRE = 'A' AND EQ.CANTEQU > 0 AND NOMEQUI LIKE ? ";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, "%" + consulta + "%");
