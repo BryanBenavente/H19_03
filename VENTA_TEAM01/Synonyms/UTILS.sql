@@ -1,0 +1,1 @@
+CREATE OR REPLACE SYNONYM venta_team01.utils FOR emulation.utils;

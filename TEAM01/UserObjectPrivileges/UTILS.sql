@@ -1,0 +1,2 @@
+GRANT DEBUG ON emulation.utils TO team01 WITH GRANT OPTION;
+GRANT EXECUTE ON emulation.utils TO team01 WITH GRANT OPTION;

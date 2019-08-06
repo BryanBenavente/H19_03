@@ -1,0 +1,1 @@
+CREATE OR REPLACE SYNONYM kardex_team01.utils FOR emulation.utils;
