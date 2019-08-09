@@ -73,11 +73,9 @@
                     <p:outputLabel value="Usuario"/>
                     <p:inputText value="#{personaC.persona.USUPER}" maxlength="10"/>   
                     <h:outputLabel for="pwd1" value="Contraseña" />
-                    <p:password id="pwd1" value="#{personaC.persona.PASPER}" match="pwd2" label="Password 1" required="true" 
-                                requiredMessage="Ingresar Contraseña" maxlength="10"/>
+                    <p:password id="pwd1" value="#{personaC.persona.PASPER}" match="pwd2" label="Password 1" maxlength="10"/>
                     <h:outputLabel for="pwd2" value="Contraseña" />
-                    <p:password id="pwd2" value="#{personaC.persona.PASPER}" label="Password 2" required="true" 
-                                requiredMessage="Repetir Contraseña" maxlength="10"/>
+                    <p:password id="pwd2" value="#{personaC.persona.PASPER}" label="Password 2" maxlength="10"/>
                     <p:commandButton value="Guardar" actionListener="#{personaC.registrarC()}" update="persona :msg :lstPersona"/>
                     <p:commandButton value="Cerrar" oncomplete="PF('dato').hide();" />                    
                 </p:panelGrid>
