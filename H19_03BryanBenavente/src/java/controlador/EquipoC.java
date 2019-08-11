@@ -21,7 +21,7 @@ public class EquipoC implements Serializable {
     private EquipoImpl dao;
     private PrecioImpl daoP;
     private List<Equipo> listaEqup;
-    private List<Integer> columns;
+    private List<Equipo> equipSuc;
     private Reporte reporte;
 
     //Variables
@@ -104,6 +104,7 @@ public class EquipoC implements Serializable {
     public List<Equipo> listar() {
         try {
             listaEqup = dao.listar();
+            equipSuc = dao.list();
         } catch (Exception e) {
             System.out.println("Error al listarC: " + e.getMessage());
         }
@@ -117,19 +118,7 @@ public class EquipoC implements Serializable {
     public void limpio() {
         setPr1(0.0);
         setPr2(0.0);
-    }
-
-    public void increment() {
-        if (columns.size() < 20) {
-            columns.add(columns.size() + 1);
-        }
-    }
-
-    public void decrease() {
-        if (columns.size() > 1) {
-            columns.remove(columns.size() - 1);
-        }
-    }
+    }    
 
     public void reportEqp(){
         try {            
@@ -166,14 +155,6 @@ public class EquipoC implements Serializable {
         this.listaEqup = listaEqup;
     }
 
-    public List<Integer> getColumns() {
-        return columns;
-    }
-
-    public void setColumns(List<Integer> columns) {
-        this.columns = columns;
-    }
-
     public PrecioImpl getDaoP() {
         return daoP;
     }
@@ -196,6 +177,14 @@ public class EquipoC implements Serializable {
 
     public void setPr2(double pr2) {
         this.pr2 = pr2;
+    }
+
+    public List<Equipo> getEquipSuc() {
+        return equipSuc;
+    }
+
+    public void setEquipSuc(List<Equipo> equipSuc) {
+        this.equipSuc = equipSuc;
     }
 
 }

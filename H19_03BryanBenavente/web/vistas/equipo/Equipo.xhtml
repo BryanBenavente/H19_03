@@ -172,12 +172,12 @@
                     <p:column>
                         <p:outputLabel value="P. Compra"/>
                         <br/>
-                        <p:inputText value="#{equipoC.pr1}" size="12"/>
+                        <p:inputText value="#{equipoC.equipo.PRECOM}" size="12" required="true" requiredMessage="Ingresar P. Compra"/>
                     </p:column>
                     <p:column>
                         <p:outputLabel value="P. Venta"/>
                         <br/>
-                        <p:inputText value="#{equipoC.pr2}" size="12"/>                                                
+                        <p:inputText value="#{equipoC.equipo.PREVEN}" size="12" required="true" requiredMessage="Ingresar P. Venta"/>                                                
                     </p:column>
                 </p:panelGrid>         
                 <p:separator/>

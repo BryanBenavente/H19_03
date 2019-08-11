@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Equipos por Sucursal</title>
+        <f:event type="preRenderView" listener="#{loginC.securitySession()}"/>
+        <f:event type="preRenderView" listener="#{equipoC.listar()}"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <center>
+                <h1 style="color: coral">Lista de Equipos por Sucursal</h1>
+            </center>
+            
+            <p:dataTable var="list" value="#{equipoC.equipSuc}" reflow="true" style="font-size: 13px"
+                         sortBy="#{list.IMGEQU}" expandableRowGroups="true">
+                <p:headerRow>
+                    <p:column colspan="6">
+                        <h:outputText value="#{list.IMGEQU}" />
+                    </p:column>
+                </p:headerRow>
+                <p:column groupRow="true">
+                    <h:outputText value="Computadoras" rendered="#{list.CATEQUI eq 'CP'}" style="font-weight: bold; color: #d88715"/>
+                    <h:outputText value="Laptops" rendered="#{list.CATEQUI eq 'LP'}" style="font-weight: bold; color: #d88715"/>
+                    <h:outputText value="Monitores" rendered="#{list.CATEQUI eq 'TV'}" style="font-weight: bold; color: #d88715"/>
+                    <h:outputText value="Dispositivo multifunción" rendered="#{list.CATEQUI eq 'DM'}" style="font-weight: bold; color: #d88715"/>
+                    <h:outputText value="Proyectores" rendered="#{list.CATEQUI eq 'PY'}" style="font-weight: bold; color: #d88715"/>
+                    <h:outputText value="Tablet" rendered="#{list.CATEQUI eq 'TB'}" style="font-weight: bold; color: #d88715"/>
+                    <h:outputText value="Periféricos" rendered="#{list.CATEQUI eq 'PF'}" style="font-weight: bold; color: #d88715"/>
+                </p:column>
+                <p:column headerText="Equipo">
+                    <h:outputText value="#{list.NOMEQUI}" />
+                </p:column>
+                <p:column headerText="Marca">
+                    <h:outputText value="#{list.MAREQU}" />
+                </p:column>
+                <p:column headerText="Precio Compra">
+                    <h:outputText value="#{list.PRECOM}" >
+                        <f:convertNumber type="currency" currencySymbol="S/. "/>
+                    </h:outputText>
+                </p:column>                
+                <p:column headerText="Precio Venta">
+                    <h:outputText value="#{list.PREVEN}" >
+                        <f:convertNumber type="currency" currencySymbol="S/. "/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Cantidad" style="text-align: center">
+                    <h:outputText value="#{list.CANTEQU}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
