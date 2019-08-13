@@ -173,8 +173,10 @@
                         <f:selectItem itemValue="J" itemLabel="Jefe de sucursal"/>
                         <f:selectItem itemValue="V" itemLabel="Vendedor"/>
                         <f:selectItem itemValue="C" itemLabel="Cliente"/>
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Sucursal"/>
+                    </p:selectOneMenu>                    
+                    <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
+                        <p:outputLabel value="Sucursal"/>
+                    </h:panelGroup>
                     <p:outputLabel value="#{personaC.persona.IDSUC}" />    
                     <h:panelGroup rendered="#{personaC.persona.TIPPER == ('A' || 'J' || 'V') and personaC.persona.TIPPER != 'C'}">
                         <p:outputLabel value="Usuario"/>                        

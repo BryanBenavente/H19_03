@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.Venta;
 
-public class VentaImpl extends Conexion implements ICRUD<Venta>{
+public class VentaImpl extends Conexion implements ICRUD<Venta> {
 
     @Override
     public void registrar(Venta venta) throws Exception {
@@ -30,7 +30,7 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
     @Override
     public void modificar(Venta venta) throws Exception {
         try {
-            String sql = "UPDATE VENTA.VENTA SET IDPER=?, FECVEN=?, ESTVEN=? WHERE IDVEN =?";                    
+            String sql = "UPDATE VENTA.VENTA SET IDPER=?, FECVEN=?, ESTVEN=? WHERE IDVEN =?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, venta.getIDPER());
             SimpleDateFormat forma = new SimpleDateFormat("yyyy/MM/dd");
@@ -46,7 +46,7 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
     @Override
     public void eliminar(Venta venta) throws Exception {
         try {
-            String sql = "UPDATE VENTA.VENTA SET ESTVEN='I' WHERE IDVEN =?";                    
+            String sql = "UPDATE VENTA.VENTA SET ESTVEN='I' WHERE IDVEN =?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, venta.getESTVEN());
             ps.executeUpdate();
@@ -60,12 +60,12 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
     public List<Venta> listar() throws Exception {
         List<Venta> lista;
         Venta venta;
-        String sql ="SELECT * FROM VENTA.VENTA";
+        String sql = "SELECT * FROM VENTA.VENTA";
         try {
             Statement st = this.conectar().createStatement();
             ResultSet rs = st.executeQuery(sql);
             lista = new ArrayList();
-            while(rs.next()){
+            while (rs.next()) {
                 venta = new Venta();
                 venta.setIDVEN(rs.getInt("IDVEN"));
                 venta.setIDPER(rs.getString("IDPER"));
@@ -81,15 +81,15 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
         }
         return lista;
     }
-    
-    public String codigo(String dato){
+
+    public String codigo(String dato) {
         ResultSet rs;
-        String sql ="SELECT IDPER FROM PERSONA.PERSONA WHERE CONCAT(NOMPER,' ', APEPER) LIKE ?";
+        String sql = "SELECT IDPER FROM PERSONA.PERSONA WHERE CONCAT(NOMPER,' ', APEPER) LIKE ?";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, dato);
             rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getString("IDPER");
             }
         } catch (Exception e) {
@@ -98,27 +98,27 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
         }
         return sql;
     }
-    
-    public List<String> completar(String consulta){
+
+    public List<String> completar(String consulta) {
         ResultSet rs;
         List<String> lista;
-        String sql = "SELECT CONCAT(NOMPER,' ', APEPER) AS PERSONA FROM PERSONA.PERSONA WHERE ESTPER = 'A' AND CONCAT(NOMPER,' ', APEPER) LIKE ?"; 
+        String sql = "SELECT CONCAT(NOMPER,' ', APEPER) AS PERSONA FROM PERSONA.PERSONA WHERE ESTPER = 'A' AND CONCAT(NOMPER,' ', APEPER) LIKE ?";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1, "%"+consulta+"%");
+            ps.setString(1, "%" + consulta + "%");
             lista = new ArrayList();
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 lista.add(rs.getString("PERSONA"));
-            }            
+            }
             ps.close();
             return lista;
         } catch (Exception e) {
             System.out.println("Error al buscar persona: " + e.getMessage());
             return null;
-        }       
+        }
     }
-    
+
     public void codigoV(Venta venta) throws Exception {
         try {
             String res = "";
@@ -139,5 +139,5 @@ public class VentaImpl extends Conexion implements ICRUD<Venta>{
             System.out.println("Error CodigoDAO: " + e.getMessage());
         }
     }
-    
+
 }

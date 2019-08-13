@@ -20,7 +20,7 @@ public class VentaDetC implements Serializable {
     private VentaDetImpl dao;
     private List<VentaDet> listVentd;
     private Reporte reporte;
-    
+
     public VentaDetC() {
         ventaDet = new VentaDet();
         dao = new VentaDetImpl();
@@ -31,16 +31,13 @@ public class VentaDetC implements Serializable {
     public void registrar() {
         try {
             dao.codig(ventaDet);
-            dao.agregarP(ventaDet);
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro", "Ingresado con éxito"));
+            dao.agregarP(ventaDet);            
             limpiar();
         } catch (Exception e) {
             System.out.println("Error al registraC: " + e.getMessage());
         }
     }
-    
-    
+        
     public void registrarC(){
         try {
             dao.registrar();
@@ -109,5 +106,5 @@ public class VentaDetC implements Serializable {
     public void setListVentd(List<VentaDet> listVentd) {
         this.listVentd = listVentd;
     }
-    
+
 }

@@ -9,6 +9,7 @@ public class Venta implements Serializable{
     private String IDPER;
     private Date FECVEN;
     private String ESTVEN;
+    private String IDVEND;
 
     public int getIDVEN() {
         return IDVEN;
@@ -41,5 +42,13 @@ public class Venta implements Serializable{
     public void setESTVEN(String ESTVEN) {
         this.ESTVEN = ESTVEN;
     }
-       
+
+    public String getIDVEND() {
+        return IDVEND;
+    }
+
+    public void setIDVEND(String IDVEND) {
+        this.IDVEND = IDVEND;
+    }
+           
 }

@@ -26,7 +26,7 @@ public class VentaC implements Serializable {
         dao = new VentaImpl();
         listaVent = new ArrayList();
         time = new Date();        
-    }
+    }   
     
     public void registrarC(){
         try {

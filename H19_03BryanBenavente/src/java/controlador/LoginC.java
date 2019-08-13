@@ -6,7 +6,6 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.faces.context.FacesContext;
-import modelo.Movimiento;
 import modelo.Persona;
 import services.Encriptacion;
 
@@ -16,6 +15,7 @@ public class LoginC implements Serializable {
 
     private LoginImpl dao;
     private Persona logn;
+    private VentaC vnt;
 
     private String user, pass;
     private Encriptacion en;
@@ -24,6 +24,7 @@ public class LoginC implements Serializable {
         dao = new LoginImpl();
         logn = new Persona();
         en = new Encriptacion();
+        vnt = new VentaC();
     }
 
     public void ingresar() throws Exception {

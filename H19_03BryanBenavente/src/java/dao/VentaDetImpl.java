@@ -7,12 +7,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import modelo.VentaDet;
 
 public class VentaDetImpl extends Conexion {
 
     private List<VentaDet> datos;
     private double precio;
+    private int cant;
 
     public VentaDetImpl() {
         datos = new ArrayList();
@@ -20,7 +23,16 @@ public class VentaDetImpl extends Conexion {
 
     public void agregarP(VentaDet ventaDet) {
         try {
-            datos.add(new VentaDet(ventaDet.getIDVEN(), ventaDet.getIDEQU(), ventaDet.getCANT(), getPrecio()));
+            if(ventaDet.getCANT() <= getCant()){
+              datos.add(new VentaDet(ventaDet.getIDVEN(), ventaDet.getIDEQU(), ventaDet.getCANT(), getPrecio()));   
+                setCant(0);
+                setPrecio(0.0);
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Advertencia", "La cantidad sobre pasa el STOCK: "));
+                setCant(0);
+                setPrecio(0.0);
+            }
         } catch (Exception e) {
             System.out.println("Error al agregarP " + e.getMessage());
         }
@@ -131,7 +143,7 @@ public class VentaDetImpl extends Conexion {
         ResultSet rs;
         List<String> lista;
         String sql = "SELECT \n"
-                + "	EQ.IDEQU, EQ.NOMEQUI, PR.PREVEN\n"
+                + "	EQ.IDEQU, EQ.NOMEQUI, PR.PREVEN, EQ.CANTEQU\n"
                 + "FROM VENTA.EQUIPO AS EQ\n"
                 + "	LEFT JOIN VENTA.PRECIO AS PR\n"
                 + "		ON EQ.IDEQU = PR.IDEQU\n"
@@ -144,6 +156,7 @@ public class VentaDetImpl extends Conexion {
             while (rs.next()) {
                 lista.add(rs.getString("NOMEQUI"));
                 setPrecio(Double.parseDouble(rs.getString("PREVEN")));
+                setCant(rs.getInt("CANTEQU"));
             }
             ps.close();
             return lista;
@@ -185,4 +198,12 @@ public class VentaDetImpl extends Conexion {
         this.precio = precio;
     }
 
+    public int getCant() {
+        return cant;
+    }
+
+    public void setCant(int cant) {
+        this.cant = cant;
+    }
+    
 }

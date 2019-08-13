@@ -31,10 +31,18 @@
                             <p:tooltip for="ma" value="Agregar" position="left"/>
                         </p:panelGrid>
                         <p:separator/>
-                        <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" style="font-size: 14px"
+                        <p:panelGrid columns="4" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" style="font-size: 14px"
                                      layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="Equipo"/>
-                            <p:autoComplete value="#{ventaDetC.ventaDet.IDEQU}" completeMethod="#{ventaDetC.completar}" emptyMessage="No existe" placeholder="Nombre de equipo"/>
+                            <p:autoComplete value="#{ventaDetC.ventaDet.IDEQU}" completeMethod="#{ventaDetC.completar}" emptyMessage="No existe" placeholder="Nombre de equipo" >
+                                <p:ajax update="cant pc"/>
+                            </p:autoComplete>
+                            <p:outputLabel value="STOCK" style="font-weight: bold"/>
+                            <p:outputLabel value="#{ventaDetC.dao.cant}" id="cant" style="font-weight: bold"/>
+                            <p:outputLabel value="PRECIO" style="font-weight: bold"/>
+                            <p:outputLabel value="#{ventaDetC.dao.precio}" id="pc" style="font-weight: bold">
+                                <f:convertNumber type="currency" currencySymbol="S/. "/>
+                            </p:outputLabel>
                             <p:outputLabel value="Cantidad"/>
                             <p:spinner value="#{ventaDetC.ventaDet.CANT}" required="true" size="2"
                                        requiredMessage="Ingresar cantidad" min="1" max="9999" maxlength="4">
